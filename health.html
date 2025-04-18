@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Diagnosis</title>
+    <!-- CSS code-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            color: black;
+        }
+        .container {
+            height: 500px;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(3, 3, 4, 1);
+            background-color: inherit;
+        
+        }
+        label input{
+            margin-top: 15px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            background: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        span{
+            margin-top: 10px;
+            font-size: 19px;
+            text-decoration: underline;
+
+        }
+        button:hover {
+            background: #bc2121;
+        }
+        .toggle-btn {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .toggle-btn:hover {
+            background: #ae0202;
+            
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: white;
+        }
+        .dark-mode .container {
+            border-color: #444;
+            box-shadow: 2px 2px 10px rgb(255, 255, 255);
+        }
+    </style>
+</head>
+<body>
+    <!--Lith/Dark theam -->
+    <button class="toggle-btn" onclick="toggleMode()">Dark/Light Mode</button>
+    <!--check list of the health symptoms -->
+    <div class="container">
+        <h2>Check Your Health</h2>
+        <p>Select the symptoms you are experiencing:</p>
+        <label><input type="checkbox" value="fever"> Fever</label><br>
+        <label><input type="checkbox" value="cough"> Cough</label><br>
+        <label><input type="checkbox" value="fatigue"> Fatigue</label><br>
+        <label><input type="checkbox" value="headache"> Headache</label><br>
+        <label><input type="checkbox" value="chest_pain"> Chest Pain</label><br>
+        <label><input type="checkbox" value="shortness_of_breath"> Shortness of Breath</label><br>
+        <label><input type="checkbox" value="high_blood_sugar"> High Blood Sugar</label><br>
+        <label><input type="checkbox" value="seizures"> Seizures</label><br>
+        <label><input type="checkbox" value="none"> No Symptoms</label><br>
+        <!--Submit button -->
+        <button onclick="diagnose()">Check</button>
+        <!-- displaying  the result  -->
+        <span><p id="result"></p> </span>
+    </div>
+<!-- javascript code for the symptoms  checking -->
+    <script>
+        function toggleMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        function diagnose() {
+            let symptoms = document.querySelectorAll('input[type=checkbox]:checked');
+            let selectedSymptoms = Array.from(symptoms).map(symptom => symptom.value);
+            let resultText = "";
+
+            if (selectedSymptoms.includes("none")) {
+                resultText = "You are healthy!";
+            } else if (selectedSymptoms.length === 0) {
+                resultText = "Please select at least one symptom.";
+            } else {
+                if (selectedSymptoms.includes("fever") && selectedSymptoms.includes("cough")) {
+                    resultText = "You may have the flu or a viral infection.";
+                } else if (selectedSymptoms.includes("headache") && selectedSymptoms.includes("fatigue")) {
+                    resultText = "You may be experiencing stress or dehydration.";
+                } else if (selectedSymptoms.includes("chest_pain") && selectedSymptoms.includes("shortness_of_breath")) {
+                    resultText = "Warning: Possible heart attack! Seek medical attention immediately.";
+                } else if (selectedSymptoms.includes("high_blood_sugar")) {
+                    resultText = "You may have diabetes. Consult a doctor for further evaluation.";
+                } else if (selectedSymptoms.includes("seizures")) {
+                    resultText = "You may have epilepsy or another neurological condition. Seek medical advice.";
+                } else {
+                    resultText = "Your symptoms are unclear. Consult a doctor for a proper diagnosis.";
+                }
+            }
+            document.getElementById("result").innerText = resultText;
+        }
+    </script>
+</body>
+</html>
